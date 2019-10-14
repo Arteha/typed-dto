@@ -1,0 +1,40 @@
+{
+  "name": "typed-dto",
+  "version": "0.0.1",
+  "description": "Validator for DTO models.",
+  "keywords": [
+    "model",
+    "datascheme",
+    "scheme",
+    "schema",
+    "jsonschema",
+    "typed",
+    "typescript",
+    "dto",
+    "validator",
+    "validate",
+    "validation",
+    "decorators"
+  ],
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc -w"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Arteha/admin-bro-typeorm.git"
+  },
+  "author": "Artem Zabolotnyi <1arteha1@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "12.0.10",
+    "tslint": "^5.20.0",
+    "tslint-eslint-rules": "^5.4.0",
+    "typescript": "^3.6.3"
+  },
+  "dependencies": {
+    "reflect-metadata": "^0.1.13"
+  }
+}
