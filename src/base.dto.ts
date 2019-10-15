@@ -1,5 +1,5 @@
 import { AsAttributes, ObjectType } from "./types";
-import { schemaSymbol } from "./decorators/Property";
+import { schemaSymbol } from "./decorators";
 
 export class BaseDTO
 {
@@ -7,8 +7,11 @@ export class BaseDTO
     {
         for (const p in props)
         {
-            const prop = props[p];
-            const meta = Reflect.getMetadata(schemaSymbol, this, p);
+            if(this.hasOwnProperty(p))
+            {
+                const prop = props[p];
+                const meta = Reflect.getMetadata(schemaSymbol, this, p);
+            }
         }
     }
 

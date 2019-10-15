@@ -1,10 +1,12 @@
-import { BaseDTO } from "../src";
-import { Property } from "../src/decorators";
+import { BaseDTO } from "..";
+import { Property } from "../decorators";
+import { Model } from "../decorators";
 
+@Model
 export class PersonDTO extends BaseDTO
 {
-    @Property({ enum: ["male", "felame"]})
-    public sex: "male" | "felame";
+    @Property({ enum: ["male", "female"] })
+    public sex: "male" | "female";
 
     @Property({type: "string"})
     public firstName: string;
