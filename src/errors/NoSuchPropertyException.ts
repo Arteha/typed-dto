@@ -2,8 +2,8 @@ import { ValidationException } from "./ValidationException";
 
 export class NoSuchPropertyException extends ValidationException
 {
-    constructor(propertyName: string)
+    constructor(public readonly propertyName: string)
     {
-        super("NoSuchPropertyException", `Property "${propertyName}" does not exist.`);
+        super("NoSuchPropertyException", `Property "${propertyName}" does not exist.`, undefined);
     }
 }

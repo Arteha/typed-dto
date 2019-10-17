@@ -1,3 +1,3 @@
 export * from "./decorators";
 export * from "./types";
-export * from "./base.dto";
+export * from "./dto/BaseDTO";

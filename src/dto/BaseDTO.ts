@@ -1,5 +1,6 @@
-import { AsAttributes, ObjectType } from "./types";
-import { schemaSymbol } from "./decorators";
+import { AsAttributes, ObjectType } from "../types";
+import { schemaSymbol } from "../decorators";
+import { NoSuchPropertyException } from "../errors/NoSuchPropertyException";
 
 export class BaseDTO
 {
@@ -12,15 +13,17 @@ export class BaseDTO
                 const prop = props[p];
                 const meta = Reflect.getMetadata(schemaSymbol, this, p);
             }
+            else
+                throw new NoSuchPropertyException(p);
         }
     }
 
-    public static buildOrFail<T extends BaseDTO>(this: ObjectType<T>, attributes: AsAttributes<T>): T
+    public static createOrFail<T extends BaseDTO>(this: ObjectType<T>, attributes: AsAttributes<T>): T
     {
         return new (this as any)(attributes);
     }
 
-    public static build<T extends BaseDTO>(this: ObjectType<T>, attributes: AsAttributes<T>): T | null
+    public static create<T extends BaseDTO>(this: ObjectType<T>, attributes: AsAttributes<T>): T | null
     {
         try
         {

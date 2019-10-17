@@ -16,7 +16,7 @@ export class PersonDTO extends BaseDTO
 }
 
 
-const person = PersonDTO.build({
+const person = PersonDTO.create({
     sex: "male",
     firstName: "Golub",
     lastName: "Igor"
