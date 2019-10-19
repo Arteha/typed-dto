@@ -4,12 +4,14 @@ import { BooleanOptions } from "./boolean.options";
 import { DateOptions } from "./date.options";
 import { NullOptions } from "./null.options";
 import { UndefinedOptions } from "./undefined.options";
-import { ValidString } from "../entities";
-import { ValidNumber } from "../entities";
-import { ValidBoolean } from "../entities";
-import { ValidDate } from "../entities";
-import { ValidNull } from "../entities";
-import { ValidUndefined } from "../entities";
+import {
+    ValidString,
+    ValidNumber,
+    ValidBoolean,
+    ValidDate,
+    ValidNull,
+    ValidUndefined
+} from "../entities";
 
 type StringPropertyType = typeof ValidString | "string";
 type NumberPropertyType = typeof ValidNumber | "number";

@@ -1,10 +1,8 @@
 import { BaseDTO } from "..";
-import { Property } from "../decorators";
-import { Model } from "../decorators";
-import { ValidString } from "../entities/ValidString";
-import { ValidNumber } from "../entities/ValidNumber";
+import { Model, Property } from "../decorators";
+import { ValidString, ValidNumber } from "../entities";
 
-@Model()
+@Model
 export class PersonDTO extends BaseDTO
 {
     @Property([ValidString, {enum: ["male", "female"]}])
@@ -24,7 +22,7 @@ export class PersonDTO extends BaseDTO
 }
 
 
-const person = PersonDTO.create({
+const person = new PersonDTO({
     sex: "male",
     firstName: "Golub",
     lastName: "Igor",
