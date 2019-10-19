@@ -1,14 +1,37 @@
 import { StringOptions } from "./string.options";
 import { NumberOptions } from "./number.options";
+import { BooleanOptions } from "./boolean.options";
+import { DateOptions } from "./date.options";
+import { NullOptions } from "./null.options";
+import { UndefinedOptions } from "./undefined.options";
+import { ValidString } from "../entities";
+import { ValidNumber } from "../entities";
+import { ValidBoolean } from "../entities";
+import { ValidDate } from "../entities";
+import { ValidNull } from "../entities";
+import { ValidUndefined } from "../entities";
 
-export type PropertyType = "string" | "number" | "boolean" | "date" | "null" | "undefined";
+type StringPropertyType = typeof ValidString | "string";
+type NumberPropertyType = typeof ValidNumber | "number";
+type BooleanPropertyType = typeof ValidBoolean | "boolean";
+type DatePropertyType = typeof ValidDate | "date";
+type NullPropertyType = typeof ValidNull | "null";
+type UndefinedPropertyType = typeof ValidUndefined | "undefined";
 
-export type Property<T extends PropertyType, V> = {
-    type: T
-    options?: V
-}
+export type PropertyType = StringPropertyType
+    | NumberPropertyType
+    | BooleanPropertyType
+    | DatePropertyType
+    | NullPropertyType
+    | UndefinedPropertyType;
+
+export type PropertyOption<T extends PropertyType, V> = [T] | [T, V];
 
 export type PropertyOptions = (
-    Property<"string", StringOptions>
-    | Property<"number", NumberOptions>
+    PropertyOption<StringPropertyType, StringOptions>
+    | PropertyOption<NumberPropertyType, NumberOptions>
+    | PropertyOption<BooleanPropertyType, BooleanOptions>
+    | PropertyOption<DatePropertyType, DateOptions>
+    | PropertyOption<NullPropertyType, NullOptions>
+    | PropertyOption<UndefinedPropertyType, UndefinedOptions>
 );

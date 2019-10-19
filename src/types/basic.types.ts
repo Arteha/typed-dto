@@ -5,5 +5,3 @@ export declare type ObjectType<T> = {
 export type AsAttributes<T> = {
     [P in keyof T]: T[P]
 } | Function;
-
-export type Enumerable = string | number;
