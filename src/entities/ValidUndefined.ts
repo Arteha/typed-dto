@@ -1,5 +1,5 @@
 import { UndefinedOptions } from "../types";
-import { NotANullException } from "../exceptions/NotANullException";
+import { NotAnUndefinedException } from "../exceptions/NotAnUndefinedException";
 
 export function ValidUndefined(value: any, opts?: UndefinedOptions): undefined
 {
@@ -11,5 +11,5 @@ export function ValidUndefined(value: any, opts?: UndefinedOptions): undefined
     else if(value == null || value == "null" || value == "undefined")
         return undefined;
 
-    throw new NotANullException(value);
+    throw new NotAnUndefinedException(value);
 }

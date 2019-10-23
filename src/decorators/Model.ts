@@ -1,45 +1,84 @@
-import { BaseDTO } from "../";
+import { BaseDTO, PropertyOptions, schemaSymbol } from "../";
+import { NoSuchPropertyException } from "../exceptions/NoSuchPropertyException";
+import { JSONParseException } from "../exceptions/JSONParseException";
+import { ValidArray, ValidBoolean, ValidDate, ValidNull, ValidNumber, ValidString, ValidUndefined } from "../entities";
+import { ValidationException } from "../exceptions/ValidationException";
 
-// <T extends { new(...args: any[]): BaseDTO }>
-export function Model<T extends { new(...args: any[]): BaseDTO }>(target: Function): any
+function parseJSON(json: string)
 {
-    /*
-    for (const p in props)
+    try
+    { return JSON.parse(json) }
+    catch (e)
+    { throw new JSONParseException(e.message, json) }
+}
+
+type PossibleMeta = Array<PropertyOptions> | PropertyOptions | undefined;
+
+function setProperty(instance: Object, p: string, value: any, meta: PropertyOptions): ValidationException | null
+{
+    try
     {
-        if(this.hasOwnProperty(p))
+        if (meta.type == "array")
+            instance[ p ] = ValidArray(value, meta.opts);
+        else if (meta.type == "boolean")
+            instance[ p ] = ValidBoolean(value, meta.opts);
+        else if (meta.type == "date")
+            instance[ p ] = ValidDate(value, meta.opts);
+        else if (meta.type == "null")
+            instance[ p ] = ValidNull(value, meta.opts);
+        else if (meta.type == "number")
+            instance[ p ] = ValidNumber(value, meta.opts);
+        else if (meta.type == "string")
+            instance[ p ] = ValidString(value, meta.opts);
+        else // meta.type == "undefined"
+            instance[ p ] = ValidUndefined(value, meta.opts);
+
+        return null;
+    }
+    catch (e)
+    {
+        return e;
+    }
+}
+
+export function Model<T extends { new(...args: any[]): BaseDTO }>(original: T): T
+{
+    return class extends original
+    {
+        constructor(...args: any[])
         {
-            const prop = props[p];
-            const meta = Reflect.getMetadata(schemaSymbol, this, p);
+            super(...args);
+
+            const props = typeof this._props == "string" ? parseJSON(this._props) : this._props;
+            if (props)
+            {
+                for (const p in props)
+                {
+                    const value = props[ p ];
+                    const meta: PossibleMeta = Reflect.getMetadata(schemaSymbol, this, p);
+                    if (meta)
+                    {
+                        let validationException: ValidationException | null = null;
+                        if(meta instanceof Array)
+                        {
+                            for(const m of meta)
+                            {
+                                validationException = setProperty(this, p, value, m);
+                                if(!validationException)
+                                    break;
+                            }
+                        }
+                        else
+                            validationException = setProperty(this, p, value, meta);
+
+                        if(validationException)
+                            throw validationException;
+                    }
+                    else
+                        throw new NoSuchPropertyException(p);
+                }
+            }
+            delete this._props;
         }
-        else
-            throw new NoSuchPropertyException(p);
-    }
-    */
-
-    // save a reference to the original constructor
-    const original = target;
-
-    // a utility function to generate instances of a class
-    function construct(constructor, args)
-    {
-        const c: any = function()
-        {
-            return constructor.apply(this, args);
-        };
-        c.prototype = constructor.prototype;
-        return new c();
-    }
-
-    // the new constructor behaviour
-    const f: any = function(...args)
-    {
-        console.log(`New: ${original["name"]} is created`);
-        return construct(original, args);
-    };
-
-    // copy prototype so intanceof operator still works
-    f.prototype = original.prototype;
-
-    // return new constructor (will override original)
-    return f;
+    } as any;
 }

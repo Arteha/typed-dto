@@ -1,3 +1,4 @@
+export * from "./BaseDTO";
 export * from "./ValidArray";
 export * from "./ValidBoolean";
 export * from "./ValidDate";

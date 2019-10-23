@@ -1,11 +1,12 @@
-import { AsAttributes, ObjectType } from "../types";
+import { AsAttributes, ObjectType } from "../types/index";
 
 export class BaseDTO
 {
-    // public _props: Object | undefined;
-    constructor(props: Object)
+    protected _props: Object | string | undefined;
+
+    constructor(props: Object | string)
     {
-        // this._props = props;
+        this._props = props;
     }
 
     public static createOrFail<T extends BaseDTO>(this: ObjectType<T>, attributes: AsAttributes<T>): T

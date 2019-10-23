@@ -1,30 +1,36 @@
 import { BaseDTO } from "..";
 import { Model, Property } from "../decorators";
-import { ValidString, ValidNumber } from "../entities";
 
 @Model
 export class PersonDTO extends BaseDTO
 {
-    @Property([ValidString, {enum: ["male", "female"]}])
+
+    @Property({ type: "string", opts: { enum: [ "male", "female" ] } })
     public sex: "male" | "female";
 
-    @Property([ValidString])
+    @Property({ type: "string" })
     public firstName: string;
 
-    @Property([ValidString])
+    @Property({ type: "string" })
     public lastName: string;
 
     @Property([
-        [ValidString, {allow: "0123456789"}],
-        [ValidNumber, {type: "real"}]
+        { type: "string", opts: { allow: "0123456789" } },
+        { type: "number", opts: { type: "integer" } }
     ])
     public age: string | number;
-}
 
+    constructor(props: Object | string)
+    {
+        super(props);
+    }
+}
 
 const person = new PersonDTO({
     sex: "male",
     firstName: "Golub",
     lastName: "Igor",
-    age: 1
+    age: 21
 });
+
+console.log(person);
