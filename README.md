@@ -17,9 +17,9 @@ class BadRequestException extends Error
 
 ##### Define Model:
 ```typescript
-import {BaseDTO, Model, Property} from "typed-dto";
+import {BaseDTO, TypedDTO, Property} from "typed-dto";
 
-@Model
+@TypedDTO
 class ArticleDTO extends BaseDTO
 {
     @Property({ type: "string", regexp: /^[0-9a-zA-Z]{5,256}$/s })

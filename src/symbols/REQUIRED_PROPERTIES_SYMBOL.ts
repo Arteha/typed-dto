@@ -1,0 +1,1 @@
+export const REQUIRED_PROPERTIES_SYMBOL = Symbol("required-properties");

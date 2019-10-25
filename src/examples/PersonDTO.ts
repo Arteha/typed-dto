@@ -1,8 +1,8 @@
 import { BaseDTO } from "..";
-import { Model, Property } from "../decorators";
+import { TypedDTO, Property } from "../decorators";
 import { ExperienceDTO } from "./ExperienceDTO";
 
-@Model
+@TypedDTO
 export class PersonDTO extends BaseDTO<PersonDTO>
 {
     @Property({ type: "string", enum: [ "male", "female" ] })

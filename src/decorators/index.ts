@@ -1,2 +1,2 @@
-export * from "./Model";
+export * from "./TypedDTO";
 export * from "./Property";

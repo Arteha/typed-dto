@@ -1,7 +1,7 @@
 import { BaseDTO } from "../entities";
-import { Model, Property } from "../decorators";
+import { TypedDTO, Property } from "../decorators";
 
-@Model
+@TypedDTO
 export class ExperienceDTO extends BaseDTO<ExperienceDTO>
 {
     @Property({type: "number", as: "integer", enum: [1, 2, 3, 4, 5]})
