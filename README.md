@@ -22,16 +22,13 @@ import {BaseDTO, Model, Property} from "typed-dto";
 @Model
 class ArticleDTO extends BaseDTO
 {
-    @Property({
-        type: "string",
-        opts: { regexp: /^[0-9a-zA-Z]{5,256}$/s }
-    })
+    @Property({ type: "string", regexp: /^[0-9a-zA-Z]{5,256}$/s })
     public title: string;
     
-    @Property({ type: "string", opts: { min: 5, max: 256*256 } })
+    @Property({ type: "string", min: 5, max: 256*256 })
     public content: string;
     
-    @Property(["date"])
+    @Property({ type: "date" })
     public publishedAt: Date;
 }
 ```

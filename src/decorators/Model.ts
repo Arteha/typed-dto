@@ -1,8 +1,11 @@
-import { BaseDTO, PropertyOptions, schemaSymbol } from "../";
+import { BaseDTO} from "../";
 import { NoSuchPropertyException } from "../exceptions/NoSuchPropertyException";
 import { JSONParseException } from "../exceptions/JSONParseException";
-import { ValidArray, ValidBoolean, ValidDate, ValidNull, ValidNumber, ValidString, ValidUndefined } from "../entities";
 import { ValidationException } from "../exceptions/ValidationException";
+import { setProperty } from "../utils/setProperty";
+import { PROPERTIES_SYMBOL } from "../symbols/PROPERTIES_SYMBOL";
+import { SCHEMA_SYMBOL } from "../symbols/SCHEMA_SYMBOL";
+import { Schema } from "../types/Schema";
 
 function parseJSON(json: string)
 {
@@ -12,34 +15,8 @@ function parseJSON(json: string)
     { throw new JSONParseException(e.message, json) }
 }
 
-type PossibleMeta = Array<PropertyOptions> | PropertyOptions | undefined;
-
-function setProperty(instance: Object, p: string, value: any, meta: PropertyOptions): ValidationException | null
-{
-    try
-    {
-        if (meta.type == "array")
-            instance[ p ] = ValidArray(value, meta.opts);
-        else if (meta.type == "boolean")
-            instance[ p ] = ValidBoolean(value, meta.opts);
-        else if (meta.type == "date")
-            instance[ p ] = ValidDate(value, meta.opts);
-        else if (meta.type == "null")
-            instance[ p ] = ValidNull(value, meta.opts);
-        else if (meta.type == "number")
-            instance[ p ] = ValidNumber(value, meta.opts);
-        else if (meta.type == "string")
-            instance[ p ] = ValidString(value, meta.opts);
-        else // meta.type == "undefined"
-            instance[ p ] = ValidUndefined(value, meta.opts);
-
-        return null;
-    }
-    catch (e)
-    {
-        return e;
-    }
-}
+type PossibleModelMetaProps = Object | string | undefined;
+export type PossibleSchemaMeta = Schema | undefined;
 
 export function Model<T extends { new(...args: any[]): BaseDTO }>(original: T): T
 {
@@ -49,27 +26,34 @@ export function Model<T extends { new(...args: any[]): BaseDTO }>(original: T): 
         {
             super(...args);
 
-            const props = typeof this._props == "string" ? parseJSON(this._props) : this._props;
+            const metaProps: PossibleModelMetaProps = Reflect.getMetadata(PROPERTIES_SYMBOL, this,  PROPERTIES_SYMBOL);
+            const props: Object | null | undefined = typeof metaProps == "string" ? parseJSON(metaProps) : metaProps;
             if (props)
             {
                 for (const p in props)
                 {
                     const value = props[ p ];
-                    const meta: PossibleMeta = Reflect.getMetadata(schemaSymbol, this, p);
-                    if (meta)
+                    const schema: PossibleSchemaMeta = Reflect.getMetadata(SCHEMA_SYMBOL, this, p);
+                    if (schema)
                     {
                         let validationException: ValidationException | null = null;
-                        if(meta instanceof Array)
+                        if(value === undefined && schema.optional)
                         {
-                            for(const m of meta)
+                            this[p] = value;
+                            continue;
+                        }
+
+                        if(schema.options instanceof Array)
+                        {
+                            for(const options of schema.options)
                             {
-                                validationException = setProperty(this, p, value, m);
+                                validationException = setProperty(this, p, value, options);
                                 if(!validationException)
                                     break;
                             }
                         }
                         else
-                            validationException = setProperty(this, p, value, meta);
+                            validationException = setProperty(this, p, value, schema.options);
 
                         if(validationException)
                             throw validationException;
@@ -77,8 +61,8 @@ export function Model<T extends { new(...args: any[]): BaseDTO }>(original: T): 
                     else
                         throw new NoSuchPropertyException(p);
                 }
+                Reflect.deleteMetadata(PROPERTIES_SYMBOL, this, PROPERTIES_SYMBOL)
             }
-            delete this._props;
         }
     } as any;
 }

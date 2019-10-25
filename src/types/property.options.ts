@@ -5,7 +5,9 @@ import { DateOptions } from "./date.options";
 import { NullOptions } from "./null.options";
 import { UndefinedOptions } from "./undefined.options";
 import { ArrayOptions } from "./array.options";
+import { BaseDTO } from "../entities";
 
+type DTOPropertyType = new (...args: any[]) => BaseDTO;
 type ArrayPropertyType = "array";
 type StringPropertyType = "string";
 type NumberPropertyType = "number";
@@ -14,7 +16,8 @@ type DatePropertyType = "date";
 type NullPropertyType = "null";
 type UndefinedPropertyType = "undefined";
 
-export type PropertyType = ArrayPropertyType
+export type PropertyType = DTOPropertyType
+    | ArrayPropertyType
     | StringPropertyType
     | NumberPropertyType
     | BooleanPropertyType
@@ -22,10 +25,11 @@ export type PropertyType = ArrayPropertyType
     | NullPropertyType
     | UndefinedPropertyType;
 
-export type PropertyOption<T extends PropertyType, O> = {type: T, opts?: O};
+export type PropertyOption<T extends PropertyType, O> = { type: T } & O;
 
 export type PropertyOptions = (
-    PropertyOption<ArrayPropertyType, ArrayOptions>
+    PropertyOption<DTOPropertyType, {}>
+    | PropertyOption<ArrayPropertyType, ArrayOptions>
     | PropertyOption<StringPropertyType, StringOptions>
     | PropertyOption<NumberPropertyType, NumberOptions>
     | PropertyOption<BooleanPropertyType, BooleanOptions>

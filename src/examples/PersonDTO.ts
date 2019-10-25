@@ -1,11 +1,11 @@
 import { BaseDTO } from "..";
 import { Model, Property } from "../decorators";
+import { ExperienceDTO } from "./ExperienceDTO";
 
 @Model
-export class PersonDTO extends BaseDTO
+export class PersonDTO extends BaseDTO<PersonDTO>
 {
-
-    @Property({ type: "string", opts: { enum: [ "male", "female" ] } })
+    @Property({ type: "string", enum: [ "male", "female" ] })
     public sex: "male" | "female";
 
     @Property({ type: "string" })
@@ -15,22 +15,36 @@ export class PersonDTO extends BaseDTO
     public lastName: string;
 
     @Property([
-        { type: "string", opts: { allow: "0123456789" } },
-        { type: "number", opts: { type: "integer" } }
+        { type: "number", as: "real" },
+        { type: "string", allow: "0123456789" }
     ])
     public age: string | number;
 
-    constructor(props: Object | string)
-    {
-        super(props);
-    }
+    @Property({
+        type: "array",
+        contains: [{ type: ExperienceDTO }]
+    })
+    public experiences: Array<ExperienceDTO>;
+
+    @Property({ type: "string" }, true)
+    public notes?: string;
 }
 
 const person = new PersonDTO({
     sex: "male",
     firstName: "Golub",
     lastName: "Igor",
-    age: 21
+    age: 21,
+    experiences: [
+        {
+            level: 4,
+            skill: "codding"
+        },
+        {
+            level: 1,
+            skill: "photoshop"
+        }
+    ]
 });
 
 console.log(person);
