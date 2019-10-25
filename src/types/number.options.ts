@@ -1,9 +1,6 @@
-import { IBaseOptions } from "./IBaseOptions";
-
 export type NumberEnumType = Array<number>;
 
-export interface INumberOptions extends IBaseOptions
-{
+export type NumberOptions = {
     strict?: boolean
     as: "integer" | "real"
     enum?: NumberEnumType
