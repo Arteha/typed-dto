@@ -8,6 +8,7 @@ import { ArrayOptions } from "./array.options";
 import { BaseDTO } from "../entities";
 
 type DTOPropertyType = new (...args: any[]) => BaseDTO;
+type AnyPropertyType = "any";
 type ArrayPropertyType = "array";
 type StringPropertyType = "string";
 type NumberPropertyType = "number";
@@ -17,6 +18,7 @@ type NullPropertyType = "null";
 type UndefinedPropertyType = "undefined";
 
 export type PropertyType = DTOPropertyType
+    | AnyPropertyType
     | ArrayPropertyType
     | StringPropertyType
     | NumberPropertyType
@@ -29,6 +31,7 @@ export type PropertyOption<T extends PropertyType, O> = { type: T } & O;
 
 export type PropertyOptions = (
     PropertyOption<DTOPropertyType, {}>
+    | PropertyOption<AnyPropertyType, {}>
     | PropertyOption<ArrayPropertyType, ArrayOptions>
     | PropertyOption<StringPropertyType, StringOptions>
     | PropertyOption<NumberPropertyType, NumberOptions>

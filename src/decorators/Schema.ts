@@ -5,7 +5,9 @@ import { ValidationException } from "../exceptions/ValidationException";
 import { setProperty } from "../utils/setProperty";
 import { PROPERTIES_SYMBOL } from "../symbols/PROPERTIES_SYMBOL";
 import { SCHEMA_SYMBOL } from "../symbols/SCHEMA_SYMBOL";
-import { Schema } from "../types";
+import { REQUIRED_PROPERTIES_SYMBOL as RP_SYMBOL } from "../symbols/REQUIRED_PROPERTIES_SYMBOL";
+import { RequiredPropertyException } from "../exceptions/RequiredPropertyException";
+import { SchemaMeta } from "../types";
 
 function parseJSON(json: string)
 {
@@ -16,9 +18,9 @@ function parseJSON(json: string)
 }
 
 type PossibleModelMetaProps = Object | string | undefined;
-export type PossibleSchemaMeta = Schema | undefined;
+export type PossibleSchemaMeta = SchemaMeta | undefined;
 
-export function TypedDTO<T extends { new(...args: any[]): BaseDTO }>(original: T): T
+export function Schema<T extends { new(...args: any[]): BaseDTO }>(original: T): T
 {
     return class extends original
     {
@@ -26,10 +28,25 @@ export function TypedDTO<T extends { new(...args: any[]): BaseDTO }>(original: T
         {
             super(...args);
 
-            const metaProps: PossibleModelMetaProps = Reflect.getMetadata(PROPERTIES_SYMBOL, this, PROPERTIES_SYMBOL);
+            const metaProps: PossibleModelMetaProps = Reflect.getMetadata(PROPERTIES_SYMBOL, this);
+            Reflect.deleteMetadata(PROPERTIES_SYMBOL, this);
+
             const props: Object | null | undefined = typeof metaProps == "string" ? parseJSON(metaProps) : metaProps;
+
             if (props)
             {
+                const required: Record<string, boolean> | undefined = Reflect.getMetadata(RP_SYMBOL, this);
+                Reflect.deleteMetadata(RP_SYMBOL, this);
+
+                if (required)
+                {
+                    for (let r in required)
+                    {
+                        if (required[ r ] && !props.hasOwnProperty(r))
+                            throw new RequiredPropertyException(r, undefined);
+                    }
+                }
+
                 for (const p in props)
                 {
                     const value = props[ p ];
@@ -61,7 +78,6 @@ export function TypedDTO<T extends { new(...args: any[]): BaseDTO }>(original: T
                     else
                         throw new NoSuchPropertyException(p);
                 }
-                Reflect.deleteMetadata(PROPERTIES_SYMBOL, this, PROPERTIES_SYMBOL)
             }
         }
     } as any;

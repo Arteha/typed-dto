@@ -7,4 +7,4 @@ export * from "./array.options";
 export * from "./date.options";
 export * from "./null.options";
 export * from "./undefined.options";
-export * from "./Schema";
+export * from "./SchemaMeta";

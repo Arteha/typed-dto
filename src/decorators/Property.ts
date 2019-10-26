@@ -1,13 +1,13 @@
 import "reflect-metadata";
 import { PropertyOptions } from "../types";
 import { SCHEMA_SYMBOL } from "../symbols/SCHEMA_SYMBOL";
-import { Schema } from "../types";
+import { SchemaMeta } from "../types";
 import { BaseDTO } from "..";
 import { REQUIRED_PROPERTIES_SYMBOL } from "../symbols/REQUIRED_PROPERTIES_SYMBOL";
 
 export function Property(options: PropertyOptions | Array<PropertyOptions>, optional?: boolean)
 {
-    const schema: Schema = {
+    const schema: SchemaMeta = {
         options,
         optional: !!optional
     };
@@ -17,8 +17,8 @@ export function Property(options: PropertyOptions | Array<PropertyOptions>, opti
         if (propertyKey == undefined)
             throw new TypeError();
 
-        const requiredMeta: Object | undefined = Reflect.getMetadata(REQUIRED_PROPERTIES_SYMBOL, target);
-        const required: Record<string, boolean> = Reflect.getMetadata(REQUIRED_PROPERTIES_SYMBOL, target) || {};
+        const requiredMeta = Reflect.getMetadata(REQUIRED_PROPERTIES_SYMBOL, target);
+        const required: Record<string, boolean> = requiredMeta || {};
         required[propertyKey] = !optional;
         if(!requiredMeta)
             Reflect.defineMetadata(REQUIRED_PROPERTIES_SYMBOL, required, target);

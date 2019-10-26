@@ -7,7 +7,7 @@ import { HasForbiddenCharacterException } from "../exceptions/HasForbiddenCharac
 import { MinStringLengthException } from "../exceptions/MinStringLengthException";
 import { MaxStringLengthException } from "../exceptions/MaxStringLengthException";
 
-export function ValidString(value: any, opts?: StringOptions)
+export function ValidString(value: any, opts?: StringOptions): string
 {
     // check if string
     if(typeof value != "string")

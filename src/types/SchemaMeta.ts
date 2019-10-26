@@ -1,6 +1,6 @@
 import { PropertyOptions } from "./property.options";
 
-export type Schema = {
+export type SchemaMeta = {
     options: PropertyOptions | Array<PropertyOptions>,
     optional: boolean
 }
