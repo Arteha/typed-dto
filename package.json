@@ -1,7 +1,7 @@
 {
   "name": "typed-dto",
-  "version": "0.0.2-alpha.1",
-  "description": "Validator for DTO models.",
+  "version": "0.0.3",
+  "description": "Data Transfer Objects with strong validation.",
   "keywords": [
     "model",
     "datascheme",

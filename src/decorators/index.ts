@@ -1,2 +1,2 @@
-export * from "./Model";
+export * from "./Schema";
 export * from "./Property";

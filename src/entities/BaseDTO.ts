@@ -1,12 +1,11 @@
-import { AsAttributes, ObjectType } from "../types/index";
+import { AsAttributes, ObjectType } from "../types";
+import { PROPERTIES_SYMBOL } from "../symbols/PROPERTIES_SYMBOL";
 
-export class BaseDTO
+export class BaseDTO<A extends Object = any>
 {
-    protected _props: Object | string | undefined;
-
-    constructor(props: Object | string)
+    constructor(props: AsAttributes<A> | string)
     {
-        this._props = props;
+        Reflect.defineMetadata(PROPERTIES_SYMBOL, props, this);
     }
 
     public static createOrFail<T extends BaseDTO>(this: ObjectType<T>, attributes: AsAttributes<T>): T

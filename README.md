@@ -1,59 +1,77 @@
-## typed-dto
+## TypedDTO
+Strong validated Data Transfer Objects for typescript.
+
+NPM: [typed-dto](https://www.npmjs.com/package/typed-dto)
 
 Installation: `npm install typed-dto`
 
-## NestJS Example:
+## Example:
 
-##### Define Error for errors middleware:
+##### Schema:
+`./dto/article.dto.ts`
 ```typescript
-class BadRequestException extends Error
-{
-    constructor(message?: string)
-    {
-        super(`400 - ${message || "Bad Request"}.`);
-    }
-}
-```
+import {BaseDTO, Schema, Property} from "typed-dto";
 
-##### Define Model:
-```typescript
-import {BaseDTO, Model, Property} from "typed-dto";
-
-@Model
+@Schema
 class ArticleDTO extends BaseDTO
 {
-    @Property({
-        type: "string",
-        opts: { regexp: /^[0-9a-zA-Z]{5,256}$/s }
-    })
+    @Property({ type: "string", regexp: /^[0-9a-zA-Z]{5,256}$/s })
     public title: string;
     
-    @Property({ type: "string", opts: { min: 5, max: 256*256 } })
+    @Property({ type: "string", min: 5, max: 256*256 })
     public content: string;
     
-    @Property(["date"])
+    @Property({ type: "date" })
     public publishedAt: Date;
 }
 ```
 
 
-##### Controller:
+##### NestJS Usage:
+`articles.controller.ts`
 ```typescript
-import { Controller, Get, Query, Post, Body, Put, Param, Delete } from '@nestjs/common';
+import { Controller, Post, Body, HttpException } from '@nestjs/common';
+import {ArticleDTO} from "./dto/article.dto";
 
 @Controller("articles")
 export class ArticlesController
 {
-    @Post()
-    create(@Body() body = ArticleDTO.create(body)): string
+    @Post("/create")
+    create(@Body() article: ArticleDTO | null = ArticleDTO.create(body)): string
     {
-        // body will instance of ArticleDTO or null if not valid
-        if(body)
-        {
-            /* ... service routine ... */
+        if(article)
             return "OK";
-        }
-        throw new BadRequestException("Go away.");
+        throw new HttpException("Invalid body.", 400);
     }
 }
+```
+
+##### Express Usage:
+`app.ts`
+```typescript
+import * as express from "express";
+import * as bodyParser from "body-parser";
+import {ArticleDTO} from "./dto/article.dto";
+
+const app = express();
+app.use( bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true })); 
+
+app.post('/articles/create', function(req, res)
+{
+    const article: ArticleDTO | null = ArticleDTO.create(req.body);
+    
+    if(article)
+    {
+        res.writeHead(200);
+        res.end("OK");
+    }
+    else
+    {
+        res.writeHead(400);
+        res.end("Invalid body.");
+    }
+});
+
+app.listen(3000);
 ```

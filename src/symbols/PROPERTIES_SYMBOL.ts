@@ -1,0 +1,1 @@
+export const PROPERTIES_SYMBOL = Symbol("properties");

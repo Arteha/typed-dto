@@ -1,7 +1,5 @@
-export type StringEnumType = Array<string>;
-
 export type StringOptions = {
-    enum?: StringEnumType
+    enum?: Array<string>
     forbid?: string
     allow?: string
     regexp?: RegExp

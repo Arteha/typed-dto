@@ -1,9 +1,7 @@
-export type NumberEnumType = Array<number>;
-
 export type NumberOptions = {
     strict?: boolean
-    type: "integer" | "real"
-    enum?: NumberEnumType
+    as?: "integer" | "real"
+    enum?: Array<number>
     ranges?: Array<[number, number]>
     min?: number
     max?: number
