@@ -18,7 +18,7 @@ export function ValidNumber(value: any, opts?: NumberOptions): number
         }
         else
         {
-            number = parseFloat(value);
+            number = Number(value);
             if(isNaN(number))
                 number = null;
         }
