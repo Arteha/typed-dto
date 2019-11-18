@@ -1,6 +1,5 @@
-import { BaseDTO, Schema, Property } from "../../../lib";
+import { BaseDTO, Property } from "../../../lib";
 
-@Schema
 export class ExperienceDTO extends BaseDTO
 {
     @Property({type: "number", as: "integer", enum: [1, 2, 3, 4, 5]})

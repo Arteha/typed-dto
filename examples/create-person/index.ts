@@ -21,5 +21,6 @@ const attrs: AsAttributes<PersonDTO> = {
 };
 const json = JSON.stringify(attrs);
 const person = new PersonDTO(json);
+const person2 = PersonDTO.createOrFail(attrs);
 
 console.log(person);

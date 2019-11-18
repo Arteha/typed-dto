@@ -1,9 +1,10 @@
 import { ValidationException } from "./ValidationException";
+import { ObjectMap } from "../types/ObjectMap";
 
 export class NotAStringException extends ValidationException
 {
-    constructor(value: any)
+    constructor(map: ObjectMap, value: any, ufMessage?: string)
     {
-        super("NotAStringException", `Value is not type of "string".`, value);
+        super("NotAStringException", `Value is not type of "string".`, map, value, ufMessage);
     }
 }

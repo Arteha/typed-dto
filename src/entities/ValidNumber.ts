@@ -5,8 +5,9 @@ import { NotInEnumException } from "../exceptions/NotInEnumException";
 import { MaxNumberException } from "../exceptions/MaxNumberException";
 import { MinNumberException } from "../exceptions/MinNumberException";
 import { NotInRangeException } from "../exceptions/NotInRangeException";
+import { ObjectMap } from "../types/ObjectMap";
 
-export function ValidNumber(value: any, opts?: NumberOptions): number
+export function ValidNumber(map: ObjectMap, value: any, opts?: NumberOptions): number
 {
     if(opts)
     {
@@ -30,24 +31,24 @@ export function ValidNumber(value: any, opts?: NumberOptions): number
                 const real = number;
                 number = parseInt(number as any);
                 if(real != number)
-                    throw new NotAnIntegerException(number);
+                    throw new NotAnIntegerException(map, number);
             }
 
             if(opts.min != null && number < opts.min)
-                throw new MinNumberException(opts.min, number);
+                throw new MinNumberException(opts.min, map, number);
 
             if(opts.max != null && number > opts.max)
-                throw new MaxNumberException(opts.max, number);
+                throw new MaxNumberException(opts.max, map, number);
 
             if(opts.enum && !opts.enum.includes(number))
-                throw new NotInEnumException(opts.enum, number);
+                throw new NotInEnumException(opts.enum, map, number);
 
             if(opts.ranges)
             {
                 for(const range of opts.ranges)
                 {
                     if(!(range[0] <= number && number <= range[1]))
-                        throw new NotInRangeException(opts.ranges, number);
+                        throw new NotInRangeException(opts.ranges, map, number);
                 }
             }
 
@@ -61,5 +62,5 @@ export function ValidNumber(value: any, opts?: NumberOptions): number
             return number;
     }
 
-    throw new NotANumberException(value);
+    throw new NotANumberException(map, value);
 }

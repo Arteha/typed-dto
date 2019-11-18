@@ -1,7 +1,8 @@
 import { NullOptions } from "../types";
 import { NotANullException } from "../exceptions/NotANullException";
+import { ObjectMap } from "../types/ObjectMap";
 
-export function ValidNull(value: any, opts?: NullOptions): null
+export function ValidNull(map: ObjectMap, value: any, opts?: NullOptions): null
 {
     if(opts)
     {
@@ -16,5 +17,5 @@ export function ValidNull(value: any, opts?: NullOptions): null
     else if(value == null || value == "null" || value == "undefined")
         return null;
 
-    throw new NotANullException(value);
+    throw new NotANullException(map, value);
 }

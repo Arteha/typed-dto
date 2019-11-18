@@ -2,16 +2,17 @@ import { ArrayOptions } from "../types";
 import { NotAnArrayException } from "../exceptions/NotAnArrayException";
 import { ValidationException } from "../exceptions/ValidationException";
 import { validateValue } from "../utils/validateValue";
-import { InvalidArrayOptionsException } from "../exceptions/InvalidArrayOptionsException";
+import { InvalidArrayOptionHasException } from "../exceptions/InvalidArrayOptionHasException";
+import { ObjectMap } from "../types/ObjectMap";
 
-export function ValidArray<T>(array: any, opts: ArrayOptions): Array<T>
+export function ValidArray<T>(map: ObjectMap, array: any, opts: ArrayOptions): Array<T>
 {
     if (array instanceof Array)
     {
         if (opts.has instanceof Array)
         {
             if(opts.has.length == 0)
-                throw new InvalidArrayOptionsException();
+                throw new InvalidArrayOptionHasException(map);
 
             for (let i = 0; i < array.length; i++)
             {
@@ -20,7 +21,7 @@ export function ValidArray<T>(array: any, opts: ArrayOptions): Array<T>
                 {
                     try
                     {
-                        array[i] = validateValue(array[i], options);
+                        array[i] = validateValue(map, array[i], options);
                         validationException = null;
                         break;
                     }
@@ -37,11 +38,11 @@ export function ValidArray<T>(array: any, opts: ArrayOptions): Array<T>
         else
         {
             for (let i = 0; i < array.length; i++)
-                array[i] = validateValue(array[i], opts.has);
+                array[i] = validateValue(map, array[i], opts.has);
         }
 
         return array;
     }
     else
-        throw new NotAnArrayException(array);
+        throw new NotAnArrayException(map, array);
 }

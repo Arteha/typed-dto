@@ -1,9 +1,10 @@
 import { ValidationException } from "./ValidationException";
+import { ObjectMap } from "../types/ObjectMap";
 
 export class NotInEnumException extends ValidationException
 {
-    constructor(public readonly _enum: Array<string | number>, value: any)
+    constructor(public readonly _enum: Array<string | number>, map: ObjectMap, value: any, ufMessage?: string)
     {
-        super("NotInEnumException", `Value is not in: ${_enum.join(", ")}.`, value);
+        super("NotInEnumException", `Value is not in: ${_enum.join(", ")}.`, map, value, ufMessage);
     }
 }
