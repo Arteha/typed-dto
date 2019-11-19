@@ -1,18 +1,18 @@
 import { PersonDTO } from "./dto/PersonDTO";
 import { AsAttributes } from "../../lib/types";
 
-const attrs: AsAttributes<PersonDTO> = {
+const attrs: AsAttributes<any> = {
     sex: "male",
     firstName: "Foo",
     lastName: "Bar",
-    age: "dsfsfsdf",
+    age: 21,
     experiences: [
         {
             level: 4,
             skill: "codding"
         },
         {
-            level: 1,
+            level: 10,
             skill: "photoshop"
         }
     ],
@@ -21,6 +21,5 @@ const attrs: AsAttributes<PersonDTO> = {
 };
 const json = JSON.stringify(attrs);
 const person = new PersonDTO(json);
-const person2 = PersonDTO.createOrFail(attrs);
 
 console.log(person);

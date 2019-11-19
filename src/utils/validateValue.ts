@@ -1,7 +1,6 @@
 import { PropertyOptions } from "../types";
 import { ValidArray, ValidBoolean, ValidDate, ValidNull, ValidNumber, ValidString, ValidUndefined } from "../entities";
 import { ObjectMap } from "../types/ObjectMap";
-import { MAP_SYMBOL } from "../symbols/MAP_SYMBOL";
 import { ValidationException } from "../exceptions/ValidationException";
 
 export function validateValue(map: ObjectMap, value: any, options: PropertyOptions): any

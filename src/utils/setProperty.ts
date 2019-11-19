@@ -6,7 +6,7 @@ import { ObjectMap } from "../types/ObjectMap";
 export function setProperty(
     map: ObjectMap,
     target: Object, options: PropertyOptions,
-    p: string, v: any
+    p: string | number, v: any
 ): ValidationException | null
 {
     map.push(p);

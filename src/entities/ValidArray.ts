@@ -1,12 +1,13 @@
 import { ArrayOptions } from "../types";
 import { NotAnArrayException } from "../exceptions/NotAnArrayException";
 import { ValidationException } from "../exceptions/ValidationException";
-import { validateValue } from "../utils/validateValue";
 import { InvalidArrayOptionHasException } from "../exceptions/InvalidArrayOptionHasException";
 import { ObjectMap } from "../types/ObjectMap";
+import { setProperty } from "../utils/setProperty";
 
 export function ValidArray<T>(map: ObjectMap, array: any, opts: ArrayOptions): Array<T>
 {
+    console.log(map);
     if (array instanceof Array)
     {
         if (opts.has instanceof Array)
@@ -19,16 +20,9 @@ export function ValidArray<T>(map: ObjectMap, array: any, opts: ArrayOptions): A
                 let validationException: ValidationException | null = null;
                 for(let options of opts.has)
                 {
-                    try
-                    {
-                        array[i] = validateValue(map, array[i], options);
-                        validationException = null;
+                    validationException = setProperty(map, array, options, i, array[i]);
+                    if(!validationException)
                         break;
-                    }
-                    catch (e)
-                    {
-                        validationException = e;
-                    }
                 }
 
                 if(validationException)
@@ -38,7 +32,11 @@ export function ValidArray<T>(map: ObjectMap, array: any, opts: ArrayOptions): A
         else
         {
             for (let i = 0; i < array.length; i++)
-                array[i] = validateValue(map, array[i], opts.has);
+            {
+                const validationException = setProperty(map, array, opts.has, i, array[i]);
+                if(validationException)
+                    throw validationException;
+            }
         }
 
         return array;

@@ -1,6 +1,5 @@
 import { BaseDTO, SchemaMeta } from "../";
 import { ObjectMap } from "../types/ObjectMap";
-import { MAP_SYMBOL } from "../symbols/MAP_SYMBOL";
 import { PROPERTIES_SYMBOL } from "../symbols/PROPERTIES_SYMBOL";
 import { parseJSON } from "../utils/parseJSON";
 import { REQUIRED_PROPERTIES_SYMBOL as RP_SYMBOL } from "../symbols/REQUIRED_PROPERTIES_SYMBOL";
@@ -21,18 +20,13 @@ export function Schema<T extends { new(...args: any[]): BaseDTO }>(original: T):
         {
             super(...args);
 
-            let metaMap: ObjectMap | undefined = Reflect.getMetadata(MAP_SYMBOL, this);
-            if (!metaMap)
-            {
-                metaMap = [];
-                Reflect.defineMetadata(MAP_SYMBOL, metaMap, this);
-            }
+            const map: ObjectMap = [];
 
             const metaProps: PossibleModelMetaProps = Reflect.getMetadata(PROPERTIES_SYMBOL, this);
             Reflect.deleteMetadata(PROPERTIES_SYMBOL, this);
 
             const props: Object | null | undefined = typeof metaProps == "string" ? parseJSON(
-                metaProps, metaMap
+                metaProps, map
             ) : metaProps;
 
             if (props)
@@ -45,7 +39,7 @@ export function Schema<T extends { new(...args: any[]): BaseDTO }>(original: T):
                     for (let r in required)
                     {
                         if (required[ r ] && !props.hasOwnProperty(r))
-                            throw new RequiredPropertyException(r, metaMap, undefined);
+                            throw new RequiredPropertyException(r, map, undefined);
                     }
                 }
 
@@ -66,19 +60,19 @@ export function Schema<T extends { new(...args: any[]): BaseDTO }>(original: T):
                         {
                             for (const options of schema.options)
                             {
-                                validationException = setProperty(metaMap, this, options, p, value);
+                                validationException = setProperty(map, this, options, p, value);
                                 if (!validationException)
                                     break;
                             }
                         }
                         else
-                            validationException = setProperty(metaMap, this, schema.options, p, value);
+                            validationException = setProperty(map, this, schema.options, p, value);
 
                         if (validationException)
                             throw validationException;
                     }
                     else
-                        throw new NoSuchPropertyException(p, metaMap);
+                        throw new NoSuchPropertyException(p, map);
                 }
             }
         }

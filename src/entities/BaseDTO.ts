@@ -17,8 +17,7 @@ export class BaseDTO<A extends Object = any>
     {
         try
         {
-            const instance = new (this as any)(attributes);
-            return (this as any).validate(instance);
+            return new (this as any)(attributes);
         }
         catch(e)
         {
