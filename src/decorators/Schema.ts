@@ -7,7 +7,7 @@ import { RequiredPropertyException } from "../exceptions/RequiredPropertyExcepti
 import { SCHEMA_SYMBOL } from "../symbols/SCHEMA_SYMBOL";
 import { ValidationException } from "../exceptions/ValidationException";
 import { setProperty } from "../utils/setProperty";
-import { NoSuchPropertyException } from "../exceptions/NoSuchPropertyException";
+import { UnexpectedPropertyException } from "../exceptions/UnexpectedPropertyException";
 
 type PossibleModelMetaProps = Object | string | undefined;
 type PossibleSchemaMeta = SchemaMeta | undefined;
@@ -72,7 +72,7 @@ export function Schema<T extends { new(...args: any[]): BaseDTO }>(original: T):
                             throw validationException;
                     }
                     else
-                        throw new NoSuchPropertyException(p, map);
+                        throw new UnexpectedPropertyException(p, map);
                 }
             }
         }

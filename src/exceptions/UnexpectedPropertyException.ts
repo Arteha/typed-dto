@@ -1,10 +1,10 @@
 import { ValidationException } from "./ValidationException";
 import { ObjectMap } from "../types/ObjectMap";
 
-export class NoSuchPropertyException extends ValidationException
+export class UnexpectedPropertyException extends ValidationException
 {
     constructor(public readonly propertyName: string, map: ObjectMap, ufMessage?: string)
     {
-        super("NoSuchPropertyException", `Property "${propertyName}" does not exist.`, map, undefined, ufMessage);
+        super("UnexpectedPropertyException", `Unexpected property "${propertyName}".`, map, undefined, ufMessage);
     }
 }

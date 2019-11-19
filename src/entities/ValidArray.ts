@@ -7,7 +7,6 @@ import { setProperty } from "../utils/setProperty";
 
 export function ValidArray<T>(map: ObjectMap, array: any, opts: ArrayOptions): Array<T>
 {
-    console.log(map);
     if (array instanceof Array)
     {
         if (opts.has instanceof Array)
