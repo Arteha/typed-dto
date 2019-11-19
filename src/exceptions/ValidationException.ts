@@ -1,6 +1,7 @@
 import { ObjectMap } from "../types/ObjectMap";
+import { TypedDTOException } from "./TypedDTOException";
 
-export class ValidationException extends Error
+export class ValidationException extends TypedDTOException
 {
     public map: ObjectMap;
 
