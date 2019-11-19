@@ -1,24 +1,16 @@
-import { BaseDTO } from "../";
-import { NoSuchPropertyException } from "../exceptions/NoSuchPropertyException";
-import { JSONParseException } from "../exceptions/JSONParseException";
-import { ValidationException } from "../exceptions/ValidationException";
-import { setProperty } from "../utils/setProperty";
+import { BaseDTO, SchemaMeta } from "../";
+import { ObjectMap } from "../types/ObjectMap";
 import { PROPERTIES_SYMBOL } from "../symbols/PROPERTIES_SYMBOL";
-import { SCHEMA_SYMBOL } from "../symbols/SCHEMA_SYMBOL";
+import { parseJSON } from "../utils/parseJSON";
 import { REQUIRED_PROPERTIES_SYMBOL as RP_SYMBOL } from "../symbols/REQUIRED_PROPERTIES_SYMBOL";
 import { RequiredPropertyException } from "../exceptions/RequiredPropertyException";
-import { SchemaMeta } from "../types";
-
-function parseJSON(json: string)
-{
-    try
-    { return JSON.parse(json) }
-    catch (e)
-    { throw new JSONParseException(e.message, json) }
-}
+import { SCHEMA_SYMBOL } from "../symbols/SCHEMA_SYMBOL";
+import { ValidationException } from "../exceptions/ValidationException";
+import { setProperty } from "../utils/setProperty";
+import { UnexpectedPropertyException } from "../exceptions/UnexpectedPropertyException";
 
 type PossibleModelMetaProps = Object | string | undefined;
-export type PossibleSchemaMeta = SchemaMeta | undefined;
+type PossibleSchemaMeta = SchemaMeta | undefined;
 
 export function Schema<T extends { new(...args: any[]): BaseDTO }>(original: T): T
 {
@@ -28,10 +20,14 @@ export function Schema<T extends { new(...args: any[]): BaseDTO }>(original: T):
         {
             super(...args);
 
+            const map: ObjectMap = [];
+
             const metaProps: PossibleModelMetaProps = Reflect.getMetadata(PROPERTIES_SYMBOL, this);
             Reflect.deleteMetadata(PROPERTIES_SYMBOL, this);
 
-            const props: Object | null | undefined = typeof metaProps == "string" ? parseJSON(metaProps) : metaProps;
+            const props: Object | null | undefined = typeof metaProps == "string" ? parseJSON(
+                metaProps, map
+            ) : metaProps;
 
             if (props)
             {
@@ -43,7 +39,7 @@ export function Schema<T extends { new(...args: any[]): BaseDTO }>(original: T):
                     for (let r in required)
                     {
                         if (required[ r ] && !props.hasOwnProperty(r))
-                            throw new RequiredPropertyException(r, undefined);
+                            throw new RequiredPropertyException(r, map, undefined);
                     }
                 }
 
@@ -64,19 +60,19 @@ export function Schema<T extends { new(...args: any[]): BaseDTO }>(original: T):
                         {
                             for (const options of schema.options)
                             {
-                                validationException = setProperty(this, p, value, options);
+                                validationException = setProperty(map, this, options, p, value);
                                 if (!validationException)
                                     break;
                             }
                         }
                         else
-                            validationException = setProperty(this, p, value, schema.options);
+                            validationException = setProperty(map, this, schema.options, p, value);
 
                         if (validationException)
                             throw validationException;
                     }
                     else
-                        throw new NoSuchPropertyException(p);
+                        throw new UnexpectedPropertyException(p, map);
                 }
             }
         }

@@ -1,7 +1,7 @@
 import { PersonDTO } from "./dto/PersonDTO";
 import { AsAttributes } from "../../lib/types";
 
-const attrs: AsAttributes<PersonDTO> = {
+const attrs: AsAttributes<any> = {
     sex: "male",
     firstName: "Foo",
     lastName: "Bar",
@@ -12,7 +12,7 @@ const attrs: AsAttributes<PersonDTO> = {
             skill: "codding"
         },
         {
-            level: 1,
+            level: 2,
             skill: "photoshop"
         }
     ],

@@ -1,9 +1,10 @@
 import { ValidationException } from "./ValidationException";
+import { ObjectMap } from "../types/ObjectMap";
 
 export class NotAnIntegerException extends ValidationException
 {
-    constructor(value: number)
+    constructor(map: ObjectMap, value: number, ufMessage?: string)
     {
-        super("NotAnIntegerException", `Number is not an integer.`, value);
+        super("NotAnIntegerException", `Number is not an integer.`, map, value, ufMessage);
     }
 }

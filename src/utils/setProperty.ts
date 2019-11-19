@@ -1,16 +1,24 @@
 import { PropertyOptions } from "../types";
 import { ValidationException } from "../exceptions/ValidationException";
 import { validateValue } from "./validateValue";
+import { ObjectMap } from "../types/ObjectMap";
 
-export function setProperty(target: Object, p: string, v: any, options: PropertyOptions): ValidationException | null
+export function setProperty(
+    map: ObjectMap,
+    target: Object, options: PropertyOptions,
+    p: string | number, v: any
+): ValidationException | null
 {
+    map.push(p);
     try
     {
-        target[ p ] = validateValue(v, options);
+        target[ p ] = validateValue(map, v, options);
+        map.pop();
         return null;
     }
     catch (e)
     {
+        map.pop();
         return e;
     }
 }

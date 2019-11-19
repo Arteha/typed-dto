@@ -1,7 +1,8 @@
 import { BooleanOptions } from "../types";
 import { NotABooleanException } from "../exceptions/NotABooleanException";
+import { ObjectMap } from "../types/ObjectMap";
 
-export function ValidBoolean(value: any, opts?: BooleanOptions): boolean
+export function ValidBoolean(map: ObjectMap, value: any, opts?: BooleanOptions): boolean
 {
     if(typeof value == "boolean")
         return value;
@@ -14,5 +15,5 @@ export function ValidBoolean(value: any, opts?: BooleanOptions): boolean
             return false;
     }
 
-    throw new NotABooleanException(value);
+    throw new NotABooleanException(map, value);
 }

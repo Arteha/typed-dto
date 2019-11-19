@@ -1,4 +1,4 @@
-import { AsAttributes, ObjectType } from "../types";
+import { AsAttributes } from "../types";
 import { PROPERTIES_SYMBOL } from "../symbols/PROPERTIES_SYMBOL";
 
 export class BaseDTO<A extends Object = any>
@@ -8,12 +8,12 @@ export class BaseDTO<A extends Object = any>
         Reflect.defineMetadata(PROPERTIES_SYMBOL, props, this);
     }
 
-    public static createOrFail<T extends BaseDTO>(this: ObjectType<T>, attributes: AsAttributes<T>): T
+    public static createOrFail<T extends BaseDTO>(attributes: AsAttributes<T>): T
     {
         return new (this as any)(attributes);
     }
 
-    public static create<T extends BaseDTO>(this: ObjectType<T>, attributes: AsAttributes<T>): T | null
+    public static create<T extends BaseDTO>(attributes: AsAttributes<T>): T | null
     {
         try
         {

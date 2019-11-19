@@ -1,4 +1,4 @@
-import { BaseDTO, Schema, Property } from "../../../lib";
+import { BaseDTO, Property, Schema } from "../../../lib";
 
 @Schema
 export class ExperienceDTO extends BaseDTO

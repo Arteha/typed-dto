@@ -6,31 +6,32 @@ import { NotAllowedCharacterException } from "../exceptions/NotAllowedCharacterE
 import { HasForbiddenCharacterException } from "../exceptions/HasForbiddenCharacterException";
 import { MinStringLengthException } from "../exceptions/MinStringLengthException";
 import { MaxStringLengthException } from "../exceptions/MaxStringLengthException";
+import { ObjectMap } from "../types/ObjectMap";
 
-export function ValidString(value: any, opts?: StringOptions): string
+export function ValidString(map: ObjectMap, value: any, opts?: StringOptions): string
 {
     // check if string
     if(typeof value != "string")
-        throw new NotAStringException(value);
+        throw new NotAStringException(map, value);
 
     if(opts)
     {
         if(opts.min != null && !(value.length >= opts.min))
-            throw new MinStringLengthException(opts.min, value);
+            throw new MinStringLengthException(opts.min, map, value);
 
         if(opts.max != null && !(value.length <= opts.max))
-            throw new MaxStringLengthException(opts.max, value);
+            throw new MaxStringLengthException(opts.max, map, value);
 
         // check in enum
         if(opts.enum && !opts.enum.includes(value))
-            throw new NotInEnumException(opts.enum, value);
+            throw new NotInEnumException(opts.enum, map, value);
 
         // check allowed
         if(opts.allow)
         {
             for (let i = 0; i < value.length; i++)
                 if(!opts.allow.includes(value[i]))
-                    throw new NotAllowedCharacterException(opts.allow, value);
+                    throw new NotAllowedCharacterException(opts.allow, map, value);
         }
 
         // check allowed
@@ -38,12 +39,12 @@ export function ValidString(value: any, opts?: StringOptions): string
         {
             for (let i = 0; i < value.length; i++)
                 if(opts.forbid.includes(value[i]))
-                    throw new HasForbiddenCharacterException(opts.forbid, value);
+                    throw new HasForbiddenCharacterException(opts.forbid, map, value);
         }
 
         // RegExp test
         if(opts.regexp && !opts.regexp.test(value))
-            throw new NotFitToRegExpException(opts.regexp, value);
+            throw new NotFitToRegExpException(opts.regexp, map, value);
     }
 
     return value;

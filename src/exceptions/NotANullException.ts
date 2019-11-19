@@ -1,9 +1,10 @@
 import { ValidationException } from "./ValidationException";
+import { ObjectMap } from "../types/ObjectMap";
 
 export class NotANullException extends ValidationException
 {
-    constructor(value: any)
+    constructor(map: ObjectMap, value: any, ufMessage?: string)
     {
-        super("NotANullException", `Value is not type of "null".`, value);
+        super("NotANullException", `Value is not type of "null".`, map, value, ufMessage);
     }
 }
