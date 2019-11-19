@@ -12,7 +12,7 @@ const attrs: AsAttributes<any> = {
             skill: "codding"
         },
         {
-            level: 10,
+            level: 2,
             skill: "photoshop"
         }
     ],
