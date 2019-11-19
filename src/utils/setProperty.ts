@@ -9,15 +9,16 @@ export function setProperty(
     p: string, v: any
 ): ValidationException | null
 {
+    map.push(p);
     try
     {
-        map.push(p);
         target[ p ] = validateValue(map, v, options);
         map.pop();
         return null;
     }
     catch (e)
     {
+        map.pop();
         return e;
     }
 }

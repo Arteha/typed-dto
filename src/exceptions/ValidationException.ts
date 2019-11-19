@@ -2,13 +2,16 @@ import { ObjectMap } from "../types/ObjectMap";
 
 export class ValidationException extends Error
 {
+    public map: ObjectMap;
     constructor(name: string,
-                public readonly description: string,
-                public readonly map: ObjectMap,
+                public description: string,
+                map: ObjectMap,
                 public readonly value: any,
-                public readonly ufMessage?: string)
+                public ufMessage?: string)
     {
         super(`ValidationException.${name}${map.length ? ` "${map.join(">")}"` : ""}: ${description}`);
+
+        this.map = [...map];
     }
 
     public get stack(): string

@@ -5,7 +5,7 @@ const attrs: AsAttributes<PersonDTO> = {
     sex: "male",
     firstName: "Foo",
     lastName: "Bar",
-    age: 21,
+    age: "dsfsfsdf",
     experiences: [
         {
             level: 4,
