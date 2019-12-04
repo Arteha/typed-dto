@@ -37,9 +37,10 @@ import {ArticleDTO} from "./dto/article.dto";
 export class ArticlesController
 {
     @Post("/create")
-    create(@Body() article: ArticleDTO | null = ArticleDTO.create(body)): string
+    create(@Body() body): string
     {
-        if(article)
+        const article = ArticleDTO.create(body);
+        if(article) // check if not null
             return "OK";
         throw new HttpException("Invalid body.", 400);
     }
@@ -59,9 +60,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.post('/articles/create', function(req, res)
 {
-    const article: ArticleDTO | null = ArticleDTO.create(req.body);
+    const article = ArticleDTO.create(req.body);
     
-    if(article)
+    if(article) // check if not null
     {
         res.writeHead(200);
         res.end("OK");
