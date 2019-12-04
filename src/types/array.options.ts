@@ -3,6 +3,7 @@ import { NotEmptyArray } from "./basic.types";
 
 export type ArrayOptions = {
     has: PropertyOptions | NotEmptyArray<PropertyOptions>
-    min?: number
-    max?: number
+    length?: number
+    minLength?: number
+    maxLength?: number
 }

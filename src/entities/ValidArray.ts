@@ -4,11 +4,21 @@ import { ValidationException } from "../exceptions/ValidationException";
 import { InvalidArrayOptionHasException } from "../exceptions/InvalidArrayOptionHasException";
 import { ObjectMap } from "../types/ObjectMap";
 import { setProperty } from "../utils/setProperty";
+import { ArrayLengthException } from "../exceptions/ArrayLengthException";
+import { ArrayMinLengthException } from "../exceptions/ArrayMinLengthException";
+import { ArrayMaxLengthException } from "../exceptions/ArrayMaxLengthException";
 
 export function ValidArray<T>(map: ObjectMap, array: any, opts: ArrayOptions): Array<T>
 {
     if (array instanceof Array)
     {
+        if(opts.length != null && array.length != opts.length)
+            throw new ArrayLengthException(opts.length, map, array);
+        if(opts.minLength != null && array.length < opts.minLength)
+            throw new ArrayMinLengthException(opts.minLength, map, array);
+        if(opts.maxLength != null && array.length > opts.maxLength)
+            throw new ArrayMaxLengthException(opts.maxLength, map, array);
+
         if (opts.has instanceof Array)
         {
             if(opts.has.length == 0)
