@@ -1,6 +1,6 @@
 {
   "name": "typed-dto",
-  "version": "0.0.8",
+  "version": "v0.0.9",
   "description": "Data Transfer Objects with strong validation.",
   "keywords": [
     "model",
