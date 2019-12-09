@@ -7,6 +7,7 @@ import { HasForbiddenCharacterException } from "../exceptions/HasForbiddenCharac
 import { MinStringLengthException } from "../exceptions/MinStringLengthException";
 import { MaxStringLengthException } from "../exceptions/MaxStringLengthException";
 import { ObjectMap } from "../types/ObjectMap";
+import { InvalidStringLengthException } from "../exceptions/InvalidStringLengthException";
 
 export function ValidString(map: ObjectMap, value: any, opts?: StringOptions): string
 {
@@ -16,6 +17,9 @@ export function ValidString(map: ObjectMap, value: any, opts?: StringOptions): s
 
     if(opts)
     {
+        if(opts.length != null && opts.length != value.length)
+            throw new InvalidStringLengthException(opts.length, map, value);
+
         if(opts.min != null && !(value.length >= opts.min))
             throw new MinStringLengthException(opts.min, map, value);
 
