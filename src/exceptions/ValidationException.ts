@@ -1,7 +1,6 @@
 import { ObjectMap } from "../types/ObjectMap";
-import { TypedDTOException } from "./TypedDTOException";
 
-export class ValidationException extends TypedDTOException
+export class ValidationException extends Error
 {
     public map: ObjectMap;
 
@@ -11,7 +10,7 @@ export class ValidationException extends TypedDTOException
                 public readonly value: any,
                 public ufMessage?: string)
     {
-        super();
+        super(description);
 
         this.map = [...map];
     }

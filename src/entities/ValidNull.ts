@@ -2,7 +2,7 @@ import { NullOptions } from "../types";
 import { NotANullException } from "../exceptions/NotANullException";
 import { ObjectMap } from "../types/ObjectMap";
 
-export function ValidNull(map: ObjectMap, value: any, opts?: NullOptions): null
+export function ValidNull(map: ObjectMap, value: any, opts: NullOptions): null
 {
     if(opts)
     {

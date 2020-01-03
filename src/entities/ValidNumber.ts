@@ -7,7 +7,7 @@ import { MinNumberException } from "../exceptions/MinNumberException";
 import { NotInRangeException } from "../exceptions/NotInRangeException";
 import { ObjectMap } from "../types/ObjectMap";
 
-export function ValidNumber(map: ObjectMap, value: any, opts?: NumberOptions): number
+export function ValidNumber(map: ObjectMap, value: any, opts: NumberOptions): number
 {
     if(opts)
     {

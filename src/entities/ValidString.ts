@@ -9,7 +9,7 @@ import { MaxStringLengthException } from "../exceptions/MaxStringLengthException
 import { ObjectMap } from "../types/ObjectMap";
 import { InvalidStringLengthException } from "../exceptions/InvalidStringLengthException";
 
-export function ValidString(map: ObjectMap, value: any, opts?: StringOptions): string
+export function ValidString(map: ObjectMap, value: any, opts: StringOptions): string
 {
     // check if string
     if(typeof value != "string")

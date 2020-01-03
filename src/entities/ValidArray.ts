@@ -1,6 +1,6 @@
 import { ArrayOptions } from "../types";
 import { NotAnArrayException } from "../exceptions/NotAnArrayException";
-import { ValidationException } from "../exceptions/ValidationException";
+import { ValidationException } from "../exceptions";
 import { InvalidArrayOptionHasException } from "../exceptions/InvalidArrayOptionHasException";
 import { ObjectMap } from "../types/ObjectMap";
 import { setProperty } from "../utils/setProperty";
