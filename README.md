@@ -12,7 +12,7 @@ Installation: `npm install typed-dto`
 ```typescript
 import {BaseDTO, Schema, Property} from "typed-dto";
 
-@Schema
+@Schema({strict: true})
 class ArticleDTO extends BaseDTO
 {
     @Property({ type: "string", regexp: /^[0-9a-zA-Z]{5,256}$/s })
