@@ -1,6 +1,6 @@
 import { AsAttributes, ObjectType } from "../types";
 import { PROPERTIES_SYMBOL } from "../symbols/PROPERTIES_SYMBOL";
-import { ExceptionsCollection } from "../exceptions";
+// import { ExceptionsCollection } from "../exceptions";
 
 export class BaseDTO<A extends Object = any>
 {
@@ -15,7 +15,7 @@ export class BaseDTO<A extends Object = any>
     }
 
     public static create<T extends BaseDTO>(
-        this: ObjectType<T>, attributes: AsAttributes<T>, exceptionsCollection?: ExceptionsCollection
+        this: ObjectType<T>, attributes: AsAttributes<T>/*, exceptionsCollection?: ExceptionsCollection*/
     ): T | null
     {
         try
