@@ -1,7 +1,7 @@
-import { BaseDTO, Property, Schema } from "../../../lib";
+import { BaseDTO, Property, Schema } from "../../../src";
 import { ExperienceDTO } from "./ExperienceDTO";
 
-@Schema
+@Schema({ strict: true })
 export class PersonDTO extends BaseDTO<PersonDTO>
 {
     @Property({ type: "string", enum: [ "male", "female" ] })
