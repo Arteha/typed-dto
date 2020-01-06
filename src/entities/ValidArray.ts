@@ -1,15 +1,19 @@
 import { ArrayOptions } from "../types";
 import { NotAnArrayException } from "../exceptions/NotAnArrayException";
-import { ValidationException } from "../exceptions/ValidationException";
+import { ValidationException } from "../exceptions";
 import { InvalidArrayOptionHasException } from "../exceptions/InvalidArrayOptionHasException";
 import { ObjectMap } from "../types/ObjectMap";
 import { setProperty } from "../utils/setProperty";
 import { ArrayLengthException } from "../exceptions/ArrayLengthException";
 import { ArrayMinLengthException } from "../exceptions/ArrayMinLengthException";
 import { ArrayMaxLengthException } from "../exceptions/ArrayMaxLengthException";
+import { parseJSON } from "../utils/parseJSON";
 
-export function ValidArray<T>(map: ObjectMap, array: any, opts: ArrayOptions): Array<T>
+export function ValidArray<T>(array: any, opts: ArrayOptions, map: ObjectMap = []): Array<T>
 {
+    if(typeof array == "string")
+        array = parseJSON(array, map);
+
     if (array instanceof Array)
     {
         if(opts.length != null && array.length != opts.length)

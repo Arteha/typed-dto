@@ -1,4 +1,4 @@
-import { NumberOptions } from "../types";
+import { NullOptions, NumberOptions } from "../types";
 import { NotANumberException } from "../exceptions/NotANumberException";
 import { NotAnIntegerException } from "../exceptions/NotAnIntegerException";
 import { NotInEnumException } from "../exceptions/NotInEnumException";
@@ -7,7 +7,7 @@ import { MinNumberException } from "../exceptions/MinNumberException";
 import { NotInRangeException } from "../exceptions/NotInRangeException";
 import { ObjectMap } from "../types/ObjectMap";
 
-export function ValidNumber(map: ObjectMap, value: any, opts?: NumberOptions): number
+export function ValidNumber(value: any, opts: NumberOptions, map: ObjectMap = []): number
 {
     if(opts)
     {

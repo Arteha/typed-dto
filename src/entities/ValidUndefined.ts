@@ -2,7 +2,7 @@ import { UndefinedOptions } from "../types";
 import { NotAnUndefinedException } from "../exceptions/NotAnUndefinedException";
 import { ObjectMap } from "../types/ObjectMap";
 
-export function ValidUndefined(map: ObjectMap, value: any, opts?: UndefinedOptions): undefined
+export function ValidUndefined(value: any, opts: UndefinedOptions, map: ObjectMap = []): undefined
 {
     if(opts)
     {

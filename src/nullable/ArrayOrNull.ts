@@ -5,7 +5,7 @@ export function ArrayOrNull<T>(value: any, opts: ArrayOptions): Array<T> | null
 {
     try
     {
-        return ValidArray<T>([], value, opts);
+        return ValidArray<T>(value, opts);
     }
     catch (e)
     {

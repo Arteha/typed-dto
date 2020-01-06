@@ -1,18 +1,12 @@
-import { TypedDTOException } from "./TypedDTOException";
 import { ValidationException } from "./ValidationException";
 
-export class ExceptionsCollection extends TypedDTOException
+export class ExceptionsCollection extends Array<ValidationException>
 {
-    constructor(public exceptions: Array<ValidationException>)
-    {
-        super();
-    }
-
     public add(exceptions: ValidationException | Array<ValidationException>)
     {
         if(exceptions instanceof Array)
-            this.exceptions = this.exceptions.concat(exceptions);
+            this.push(...exceptions);
         else
-            this.exceptions.push(exceptions);
+            this.push(exceptions);
     }
 }
