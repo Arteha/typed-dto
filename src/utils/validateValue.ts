@@ -8,19 +8,19 @@ export function validateValue(map: ObjectMap, value: any, options: PropertyOptio
     if (options.type == "any")
         return value;
     else if (options.type == "array")
-        return ValidArray(map, value, options);
+        return ValidArray( value, options, map);
     else if (options.type == "boolean")
-        return ValidBoolean(map, value, options);
+        return ValidBoolean(value, options, map);
     else if (options.type == "date")
-        return ValidDate(map, value, options);
+        return ValidDate(value, options, map);
     else if (options.type == "null")
-        return ValidNull(map, value, options);
+        return ValidNull(value, options, map);
     else if (options.type == "number")
-        return ValidNumber(map, value, options);
+        return ValidNumber(value, options, map);
     else if (options.type == "string")
-        return ValidString(map, value, options);
+        return ValidString(value, options, map);
     else if(options.type == "undefined")
-        return ValidUndefined(map, value, options);
+        return ValidUndefined(value, options, map);
     else // typeof BaseDTO
     {
         try

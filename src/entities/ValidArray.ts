@@ -8,7 +8,7 @@ import { ArrayLengthException } from "../exceptions/ArrayLengthException";
 import { ArrayMinLengthException } from "../exceptions/ArrayMinLengthException";
 import { ArrayMaxLengthException } from "../exceptions/ArrayMaxLengthException";
 
-export function ValidArray<T>(map: ObjectMap, array: any, opts: ArrayOptions): Array<T>
+export function ValidArray<T>(array: any, opts: ArrayOptions, map: ObjectMap = []): Array<T>
 {
     if (array instanceof Array)
     {

@@ -5,14 +5,14 @@ import { parseJSON } from "../utils/parseJSON";
 import { REQUIRED_PROPERTIES_SYMBOL as RP_SYMBOL } from "../symbols/REQUIRED_PROPERTIES_SYMBOL";
 import { RequiredPropertyException } from "../exceptions/RequiredPropertyException";
 import { SCHEMA_SYMBOL } from "../symbols/SCHEMA_SYMBOL";
-import { ValidationException } from "../exceptions/ValidationException";
+import { ValidationException } from "../exceptions";
 import { setProperty } from "../utils/setProperty";
 import { UnexpectedPropertyException } from "../exceptions/UnexpectedPropertyException";
 
 type PossibleModelMetaProps = Object | string | undefined;
 type PossibleSchemaMeta = SchemaMeta | undefined;
 
-export function Schema<T extends { new(...args: any[]): BaseDTO }>(original: T): T
+export function Schema<T extends { new(...args: any[]): BaseDTO }>(original: T, kek: number): T
 {
     return class extends original
     {

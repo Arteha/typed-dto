@@ -1,8 +1,8 @@
-import { DateOptions } from "../types";
+import { ArrayOptions, DateOptions } from "../types";
 import { NotADateException } from "../exceptions/NotADateException";
 import { ObjectMap } from "../types/ObjectMap";
 
-export function ValidDate(map: ObjectMap, value: any, opts: DateOptions): Date
+export function ValidDate(value: any, opts: DateOptions, map: ObjectMap = []): Date
 {
     if(value instanceof Date)
         return value;

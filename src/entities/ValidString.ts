@@ -1,4 +1,4 @@
-import { StringOptions } from "../types";
+import { NullOptions, StringOptions } from "../types";
 import { NotAStringException } from "../exceptions/NotAStringException";
 import { NotInEnumException } from "../exceptions/NotInEnumException";
 import { NotFitToRegExpException } from "../exceptions/NotFitToRegExpException";
@@ -9,7 +9,7 @@ import { MaxStringLengthException } from "../exceptions/MaxStringLengthException
 import { ObjectMap } from "../types/ObjectMap";
 import { InvalidStringLengthException } from "../exceptions/InvalidStringLengthException";
 
-export function ValidString(map: ObjectMap, value: any, opts: StringOptions): string
+export function ValidString(value: any, opts: StringOptions, map: ObjectMap = []): string
 {
     // check if string
     if(typeof value != "string")
