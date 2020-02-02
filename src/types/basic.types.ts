@@ -3,7 +3,7 @@ export declare type ObjectType<T> = {
 } | Function;
 
 export type AsAttributes<T> = {
-    [P in keyof T]: T[P]
+    [K in keyof T]: T[K] extends Function ? never : T[K]
 };
 
 export interface NotEmptyArray<T> extends Array<T>
