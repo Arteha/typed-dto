@@ -15,7 +15,7 @@ type PossibleSchemaMeta = SchemaMeta | undefined;
 
 export function Schema<T extends { new(...args: any[]): BaseDTO }>(options: SchemaOptions = {}): Function
 {
-    return function(original: T): T
+    return function (original: T): T
     {
         return class extends original
         {
@@ -32,50 +32,52 @@ export function Schema<T extends { new(...args: any[]): BaseDTO }>(options: Sche
                     metaProps, map
                 ) : metaProps;
 
-                if(props)
+                if (props)
                 {
                     const required: Record<string, boolean> | undefined = Reflect.getMetadata(RP_SYMBOL, this);
                     Reflect.deleteMetadata(RP_SYMBOL, this);
 
-                    if(required)
+                    if (required)
                     {
                         for (let r in required)
                         {
-                            if(required[r] && !props.hasOwnProperty(r))
+                            if (required[ r ] && !props.hasOwnProperty(r))
                                 throw new RequiredPropertyException(r, map, undefined);
                         }
                     }
 
                     for (const p in props)
                     {
-                        const value = props[p];
+                        const value = props[ p ];
                         const schema: PossibleSchemaMeta = Reflect.getMetadata(SCHEMA_SYMBOL, this, p);
-                        if(schema)
+                        if (schema)
                         {
                             let validationException: ValidationException | null = null;
-                            if(value === undefined && schema.optional)
+                            if (value === undefined && schema.optional)
                             {
-                                this[p] = value;
+                                this[ p ] = value;
                                 continue;
                             }
 
-                            if(schema.options instanceof Array)
+                            if (schema.options instanceof Array)
                             {
                                 for (const options of schema.options)
                                 {
                                     validationException = setProperty(map, this, options, p, value);
-                                    if(!validationException)
+                                    if (!validationException)
                                         break;
                                 }
                             }
                             else
                                 validationException = setProperty(map, this, schema.options, p, value);
 
-                            if(validationException)
+                            if (validationException)
                                 throw validationException;
                         }
-                        else if(options.strict)
+                        else if (options.strict)
                             throw new UnexpectedPropertyException(p, map);
+                        else
+                            this[ p ] = value;
                     }
                 }
             }
