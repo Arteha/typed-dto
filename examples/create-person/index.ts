@@ -1,5 +1,5 @@
 import { PersonDTO } from "./dto/PersonDTO";
-import { AsAttributes } from "../../lib/types";
+import { AsAttributes } from "../../src/types";
 
 const attrs: AsAttributes<any> = {
     sex: "male",
@@ -17,7 +17,8 @@ const attrs: AsAttributes<any> = {
         }
     ],
     registeredAt: new Date(),
-    notes: "..."
+    notes: "some notes",
+    doesNotOccurErrorWhenSchemaIsNotStrict: "test string"
 };
 const json = JSON.stringify(attrs);
 const person = new PersonDTO(json);
