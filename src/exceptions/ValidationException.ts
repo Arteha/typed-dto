@@ -4,31 +4,23 @@ export class ValidationException extends Error
 {
     public map: ObjectMap;
 
-    constructor(public readonly name: string,
-                public description: string,
+    constructor(public description: string,
                 map: ObjectMap,
                 public readonly value: any,
-                public ufMessage?: string)
+                private ufMessage?: string)
     {
-        super(description);
+        super(`${map.length ? ` "${map.join(">")}"` : ""}: ${description}`);
 
         this.map = [...map];
     }
 
-    public get message()
+    public get message(): string
     {
-        return `ValidationException.${this.name}${
-            this.map.length ? ` "${this.map.join(">")}"` : ""
-        }: ${this.description}`;
+        return this.ufMessage != null ? this.ufMessage : this.description;
     }
 
     public get stack(): string
     {
         return super.stack || "";
-    }
-
-    public toSring()
-    {
-        return this.ufMessage != null ? this.ufMessage : this.description;
     }
 }

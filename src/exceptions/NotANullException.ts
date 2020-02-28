@@ -5,6 +5,6 @@ export class NotANullException extends ValidationException
 {
     constructor(map: ObjectMap, value: any, ufMessage?: string)
     {
-        super("NotANullException", `Value is not type of "null".`, map, value, ufMessage);
+        super(`Value is not type of "null".`, map, value, ufMessage);
     }
 }

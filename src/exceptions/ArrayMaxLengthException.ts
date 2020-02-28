@@ -5,6 +5,6 @@ export class ArrayMaxLengthException extends ValidationException
 {
     constructor(public readonly max: number, map: ObjectMap, array: Array<any>, ufMessage?: string)
     {
-        super("ArrayMaxLengthException", `Array length more than: ${max}.`, map, array, ufMessage);
+        super(`Array length more than: ${max}.`, map, array, ufMessage);
     }
 }

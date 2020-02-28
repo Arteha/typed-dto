@@ -5,6 +5,6 @@ export class HasForbiddenCharacterException extends ValidationException
 {
     constructor(public readonly forbidden: string, map: ObjectMap, value: any, ufMessage?: string)
     {
-        super("HasForbiddenCharacterException", `Forbidden are: "${forbidden}".`, map, value, ufMessage);
+        super(`Forbidden are: "${forbidden}".`, map, value, ufMessage);
     }
 }
