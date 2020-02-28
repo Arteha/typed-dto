@@ -5,6 +5,6 @@ export class NotFitToRegExpException extends ValidationException
 {
     constructor(public readonly regExp: RegExp, map: ObjectMap, value: string, ufMessage?: string)
     {
-        super("NotFitToRegExpException", `Value is not fit to RegExp: ${regExp.toString()}`, map, value, ufMessage);
+        super(`Value is not fit to RegExp: ${regExp.toString()}`, map, value, ufMessage);
     }
 }

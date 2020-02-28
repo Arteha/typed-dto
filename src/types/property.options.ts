@@ -7,7 +7,7 @@ import { UndefinedOptions } from "./undefined.options";
 import { ArrayOptions } from "./array.options";
 import { BaseDTO } from "../entities";
 
-type DTOPropertyType = new (...args: any[]) => BaseDTO;
+type DTOPropertyType = (new (...args: any[]) => BaseDTO);
 type AnyPropertyType = "any";
 type ArrayPropertyType = "array";
 type StringPropertyType = "string";

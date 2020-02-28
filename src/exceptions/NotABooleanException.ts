@@ -5,6 +5,6 @@ export class NotABooleanException extends ValidationException
 {
     constructor(map: ObjectMap, value: any, ufMessage?: string)
     {
-        super("NotABooleanException", `Value is not type of "boolean".`, map, value, ufMessage);
+        super(`Value is not type of "boolean".`, map, value, ufMessage);
     }
 }

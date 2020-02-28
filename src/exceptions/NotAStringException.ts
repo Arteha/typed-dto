@@ -5,6 +5,6 @@ export class NotAStringException extends ValidationException
 {
     constructor(map: ObjectMap, value: any, ufMessage?: string)
     {
-        super("NotAStringException", `Value is not type of "string".`, map, value, ufMessage);
+        super(`Value is not type of "string".`, map, value, ufMessage);
     }
 }

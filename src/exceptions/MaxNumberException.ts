@@ -5,6 +5,6 @@ export class MaxNumberException extends ValidationException
 {
     constructor(public readonly max: number, map: ObjectMap, value: number, ufMessage?: string)
     {
-        super("MaxNumberException", `Number more than: ${max}.`, map, value, ufMessage);
+        super(`Number more than: ${max}.`, map, value, ufMessage);
     }
 }

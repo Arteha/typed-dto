@@ -5,6 +5,6 @@ export class InvalidStringLengthException extends ValidationException
 {
     constructor(public readonly length: number, map: ObjectMap, value: string, ufMessage?: string)
     {
-        super("InvalidStringLengthException", `String length not equal: ${length}.`, map, value, ufMessage);
+        super(`String length not equal: ${length}.`, map, value, ufMessage);
     }
 }

@@ -5,6 +5,6 @@ export class InvalidArrayOptionHasException extends ValidationException
 {
     constructor(map: ObjectMap)
     {
-        super("InvalidArrayOptionHasException", `Invalid array property option "has".`, map, undefined);
+        super(`Invalid array property option "has".`, map, undefined);
     }
 }

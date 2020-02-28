@@ -21,6 +21,6 @@ const attrs: AsAttributes<any> = {
     doesNotOccurErrorWhenSchemaIsNotStrict: "test string"
 };
 const json = JSON.stringify(attrs);
-const person = new PersonDTO(json);
+const person = PersonDTO.create(json);
 
 console.log(person);

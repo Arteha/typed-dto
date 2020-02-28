@@ -5,6 +5,6 @@ export class NotAnIntegerException extends ValidationException
 {
     constructor(map: ObjectMap, value: number, ufMessage?: string)
     {
-        super("NotAnIntegerException", `Number is not an integer.`, map, value, ufMessage);
+        super(`Number is not an integer.`, map, value, ufMessage);
     }
 }

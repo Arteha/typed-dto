@@ -5,6 +5,6 @@ export class NotAnArrayException extends ValidationException
 {
     constructor(map: ObjectMap, value: any, ufMessage?: string)
     {
-        super("NotAnArrayException", `Value is not an Array.`, map, value, ufMessage);
+        super(`Value is not an Array.`, map, value, ufMessage);
     }
 }

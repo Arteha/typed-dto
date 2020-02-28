@@ -5,6 +5,6 @@ export class NotADateException extends ValidationException
 {
     constructor(map: ObjectMap, value: any, ufMessage?: string)
     {
-        super("NotADateException", `Value is not a Date.`, map, value, ufMessage);
+        super(`Value is not a Date.`, map, value, ufMessage);
     }
 }

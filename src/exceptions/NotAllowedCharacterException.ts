@@ -5,6 +5,6 @@ export class NotAllowedCharacterException extends ValidationException
 {
     constructor(public readonly allowed: string, map: ObjectMap, value: any, ufMessage?: string)
     {
-        super("NotAllowedCharacterException", `Allowed are: "${allowed}".`, map, value, ufMessage);
+        super(`Allowed are: "${allowed}".`, map, value, ufMessage);
     }
 }

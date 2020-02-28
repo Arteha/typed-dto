@@ -5,6 +5,6 @@ export class NotInEnumException extends ValidationException
 {
     constructor(public readonly _enum: Array<string | number>, map: ObjectMap, value: any, ufMessage?: string)
     {
-        super("NotInEnumException", `Value is not in: ${_enum.join(", ")}.`, map, value, ufMessage);
+        super(`Value is not in: ${_enum.join(", ")}.`, map, value, ufMessage);
     }
 }

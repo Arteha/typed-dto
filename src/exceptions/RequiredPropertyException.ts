@@ -5,6 +5,6 @@ export class RequiredPropertyException extends ValidationException
 {
     constructor(public readonly property: string, map: ObjectMap, value: any, ufMessage?: string)
     {
-        super("RequiredPropertyException", `Property "${property}" is required.`, map, value, ufMessage);
+        super(`Property "${property}" is required.`, map, value, ufMessage);
     }
 }

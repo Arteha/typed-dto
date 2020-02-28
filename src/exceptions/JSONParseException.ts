@@ -5,6 +5,6 @@ export class JSONParseException extends ValidationException
 {
     constructor(message: string, map: ObjectMap, value: string, ufMessage?: string)
     {
-        super("JSONParseException", message, map, value);
+        super(message, map, value);
     }
 }
