@@ -1,13 +1,13 @@
 import "reflect-metadata";
 import { NotEmptyArray, PropertyOptions } from "../types";
 import { SCHEMA_SYMBOL } from "../symbols/SCHEMA_SYMBOL";
-import { SchemaMeta } from "../types";
+import { PropertyMeta } from "../types";
 import { BaseDTO } from "..";
 import { REQUIRED_PROPERTIES_SYMBOL } from "../symbols/REQUIRED_PROPERTIES_SYMBOL";
 
 export function Property(options: PropertyOptions | NotEmptyArray<PropertyOptions>, optional?: boolean)
 {
-    const schema: SchemaMeta = {
+    const schema: PropertyMeta = {
         options,
         optional: !!optional
     };

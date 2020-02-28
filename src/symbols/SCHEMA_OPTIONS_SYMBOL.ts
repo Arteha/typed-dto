@@ -1,0 +1,1 @@
+export const SCHEMA_OPTIONS_SYMBOL = Symbol("schema");

@@ -1,5 +1,14 @@
 import { PropertyOptions } from "../types";
-import { ValidArray, ValidBoolean, ValidDate, ValidNull, ValidNumber, ValidString, ValidUndefined } from "../entities";
+import {
+    BaseDTO,
+    ValidArray,
+    ValidBoolean,
+    ValidDate,
+    ValidNull,
+    ValidNumber,
+    ValidString,
+    ValidUndefined
+} from "../entities";
 import { ObjectMap } from "../types/ObjectMap";
 import { ValidationException } from "../exceptions/ValidationException";
 
@@ -25,7 +34,7 @@ export function validateValue(map: ObjectMap, value: any, options: PropertyOptio
     {
         try
         {
-            return new options.type(value);
+            return ((options.type as any)as typeof BaseDTO).createOrFail(value);
         }
         catch (e)
         {
