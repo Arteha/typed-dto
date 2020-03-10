@@ -1,5 +1,5 @@
 import { PropertyOptions } from "../types";
-import { ValidationException } from "../exceptions/ValidationException";
+import { ValidationException } from "../exceptions";
 import { validateValue } from "./validateValue";
 import { ObjectMap } from "../types/ObjectMap";
 

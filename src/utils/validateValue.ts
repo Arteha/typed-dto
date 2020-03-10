@@ -38,8 +38,11 @@ export function validateValue(map: ObjectMap, value: any, options: PropertyOptio
         }
         catch (e)
         {
+            console.log("map", map);
+            console.log("e", e);
             if(e instanceof ValidationException)
                 e.map = map.concat(e.map);
+            console.log("e.map", e.map);
             throw e;
         }
     }
