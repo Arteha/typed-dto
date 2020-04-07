@@ -13,7 +13,7 @@ const attrs: AsAttributes<any> = {
         },
         {
             level: 2,
-            skill: "photoshop"
+            skilldd: "photoshop"
         }
     ],
     registeredAt: new Date(),
@@ -21,6 +21,6 @@ const attrs: AsAttributes<any> = {
     doesNotOccurErrorWhenSchemaIsNotStrict: "test string"
 };
 const json = JSON.stringify(attrs);
-const person = PersonDTO.create(json);
+const person = PersonDTO.createOrFail(json);
 
 console.log(person);
