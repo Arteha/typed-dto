@@ -9,7 +9,7 @@ export class ValidationException extends Error
                 public readonly value: any,
                 private ufMessage?: string)
     {
-        super(`${map.length ? ` "${map.join(">")}"` : ""}: ${description}`);
+        super(`${map.length ? ` "${map.join(">")}": ` : ""}${description}`);
 
         this.map = [...map];
     }
